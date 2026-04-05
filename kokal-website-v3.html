@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kokal Limited – Trusted UK Ecommerce Seller</title>
+<meta name="description" content="Kokal Limited – UK-registered ecommerce company selling quality products on eBay UK, eBay USA, Amazon, Vinted and more."/>
+
+<!-- Inline SVG favicon -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23d4a843'/%3E%3Cstop offset='100%25' stop-color='%23f0d070'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='32,3 61,19.5 61,44.5 32,61 3,44.5 3,19.5' fill='%23080e18' stroke='url(%23fg)' stroke-width='2'/%3E%3Crect x='21' y='18' width='5' height='28' fill='%23d4b06a'/%3E%3Cpolygon points='26,32 40,18 47,18 33,32' fill='%23d4b06a'/%3E%3Cpolygon points='26,32 40,46 47,46 33,32' fill='%23d4b06a'/%3E%3C/svg%3E"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* ════════════════════════════════════
+   RESET & TOKENS
+════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060c14;
+  --surface:#0b1520;
+  --card:#0f1c2e;
+  --card2:#111f32;
+  --border:rgba(180,148,72,0.18);
+  --gold:#b4944a;
+  --gold2:#d4b06a;
+  --gold3:#f0d090;
+  --cream:#f0ead8;
+  --white:#ffffff;
+  --muted:#7a8fa8;
+  --muted2:#4e6070;
+  --r:14px;
+  --glow:0 0 60px rgba(180,148,72,0.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--cream);overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+::selection{background:rgba(180,148,72,0.28);color:#fff}
+
+/* ════ CANVAS BG ════ */
+#bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.45}
+
+/* ════ LOGO SVG COMPONENT ════
+   Reusable inline SVG — call via class toggling */
+.kokal-logo-svg{display:inline-block;vertical-align:middle}
+
+/* ════ NAV ════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5vw;height:74px;
+  transition:background 0.4s,box-shadow 0.4s,height 0.3s;
+}
+nav.scrolled{
+  background:rgba(6,12,20,0.96);
+  backdrop-filter:blur(22px);
+  box-shadow:0 1px 0 var(--border);
+  height:66px;
+}
+
+/* NAV LOGO */
+.nav-logo-wrap{display:flex;align-items:center;gap:0;text-decoration:none}
+
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;
+  font-size:0.8rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  transition:color 0.2s;position:relative;
+}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold2);transition:width 0.25s}
+.nav-links a:hover{color:var(--gold2)}
+.nav-links a:hover::after{width:100%}
+
+.nav-cta{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#060c14;padding:0.52rem 1.4rem;border-radius:50px;
+  font-weight:700;font-size:0.78rem;letter-spacing:0.07em;text-transform:uppercase;
+  text-decoration:none;box-shadow:0 4px 20px rgba(180,148,72,0.22);
+  transition:opacity 0.2s,transform 0.2s,box-shadow 0.2s;white-space:nowrap;
+}
+.nav-cta:hover{opacity:0.88;transform:translateY(-1px);box-shadow:0 8px 28px rgba(180,148,72,0.38)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:22px;height:1.5px;background:var(--cream);border-radius:2px;transition:0.3s}
+
+/* ════ TICKER ════ */
+.ticker-bar{
+  position:relative;z-index:10;margin-top:74px;
+  background:linear-gradient(90deg,var(--gold) 0%,var(--gold2) 30%,var(--gold3) 60%,var(--gold2) 80%,var(--gold) 100%);
+  background-size:400%;animation:shBg 7s linear infinite;
+  padding:0.58rem 0;overflow:hidden;
+}
+@keyframes shBg{0%{background-position:0%}100%{background-position:400%}}
+.ticker-inner{display:flex;animation:tick 32s linear infinite;width:max-content}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.t-item{
+  display:flex;align-items:center;gap:0.5rem;padding:0 2.2rem;
+  font-size:0.68rem;font-weight:700;color:#060c14;
+  letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;
+}
+.t-sep{opacity:0.45;font-size:0.55rem}
+
+/* ════ HERO ════ */
+#home{
+  position:relative;z-index:1;
+  min-height:calc(100vh - 106px);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:4rem 6vw 6rem;overflow:hidden;
+}
+.h-glow{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(180,148,72,0.11),transparent 68%);pointer-events:none}
+.h-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:580px;height:580px;border-radius:50%;border:1px solid rgba(180,148,72,0.1);animation:spin 28s linear infinite;pointer-events:none}
+.h-ring::before{content:'';position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:var(--gold2);box-shadow:0 0 14px var(--gold)}
+.h-ring2{position:absolute;top:50%;left:50%;transform:translate(-50%,-54%);width:760px;height:760px;border-radius:50%;border:1px solid rgba(180,148,72,0.05);animation:spin 45s linear infinite reverse;pointer-events:none}
+@keyframes spin{to{transform:translate(-50%,-54%) rotate(360deg)}}
+/* ring starts at 0 rotation */
+.h-ring{transform:translate(-50%,-54%) rotate(0deg)}
+
+.hero-inner{position:relative;z-index:2;max-width:880px}
+
+/* HERO LOGO LOCKUP */
+.hero-logo-lockup{
+  display:flex;flex-direction:column;align-items:center;gap:1rem;
+  margin-bottom:2.2rem;
+  opacity:0;animation:rise 0.9s 0.1s ease forwards;
+}
+.hero-logo-mark{
+  filter:drop-shadow(0 0 28px rgba(212,168,67,0.35));
+  transition:filter 0.3s;
+}
+.hero-logo-mark:hover{filter:drop-shadow(0 0 40px rgba(212,168,67,0.55))}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:0.7rem;
+  opacity:0;animation:rise 0.9s 0.3s ease forwards;
+}
+.ey-line{width:28px;height:1px;background:var(--gold)}
+.ey-text{font-size:0.68rem;color:var(--gold2);letter-spacing:0.18em;text-transform:uppercase;font-weight:600}
+
+h1.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,7.5vw,6rem);font-weight:700;line-height:1.02;
+  color:var(--white);margin-bottom:1.5rem;
+  opacity:0;animation:rise 0.9s 0.45s ease forwards;
+}
+h1.hero-title .gtext{
+  font-style:italic;color:transparent;
+  background:linear-gradient(120deg,var(--gold),var(--gold3) 50%,var(--gold2));
+  -webkit-background-clip:text;background-clip:text;
+}
+
+.hero-sub{
+  font-size:clamp(0.92rem,1.8vw,1.1rem);color:var(--muted);
+  font-weight:300;line-height:1.9;max-width:580px;margin:0 auto 2.6rem;
+  opacity:0;animation:rise 0.9s 0.6s ease forwards;
+}
+.hero-btns{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:rise 0.9s 0.75s ease forwards;
+}
+.btn-g{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));color:#060c14;
+  padding:0.88rem 2.2rem;border-radius:50px;
+  font-weight:700;font-size:0.88rem;letter-spacing:0.04em;
+  text-decoration:none;box-shadow:0 8px 32px rgba(180,148,72,0.28);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-g:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(180,148,72,0.44)}
+.btn-o{
+  border:1px solid rgba(180,148,72,0.3);color:var(--cream);
+  padding:0.88rem 2.2rem;border-radius:50px;
+  font-weight:500;font-size:0.88rem;text-decoration:none;
+  backdrop-filter:blur(4px);transition:border-color 0.2s,color 0.2s,background 0.2s;
+}
+.btn-o:hover{border-color:var(--gold2);color:var(--gold2);background:rgba(180,148,72,0.06)}
+
+.hero-chips{
+  margin-top:3rem;display:flex;align-items:center;justify-content:center;gap:0.8rem;flex-wrap:wrap;
+  opacity:0;animation:rise 0.9s 0.9s ease forwards;
+}
+.chips-label{font-size:0.66rem;color:var(--muted2);letter-spacing:0.1em;text-transform:uppercase}
+.chip{
+  display:flex;align-items:center;gap:0.45rem;
+  border:1px solid var(--border);border-radius:7px;
+  padding:0.38rem 0.88rem;font-size:0.76rem;color:var(--muted);
+  background:rgba(255,255,255,0.02);
+  transition:border-color 0.25s,color 0.25s,transform 0.2s;
+}
+.chip.live{border-color:rgba(180,148,72,0.45);color:var(--gold2)}
+.chip:hover{border-color:var(--gold2);color:var(--gold2);transform:translateY(-2px)}
+.chip-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold)}
+.chip-dot-off{width:5px;height:5px;border-radius:50%;background:var(--muted2)}
+
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ════ TRUST STRIP ════ */
+.trust{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:2.8rem 6vw;background:rgba(11,21,32,0.7);backdrop-filter:blur(8px);
+}
+.trust-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+}
+.t-stat{text-align:center}
+.t-num{
+  font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),var(--gold3));
+  -webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;
+}
+.t-lbl{font-size:0.72rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:0.4rem}
+
+/* ════ SECTION SHARED ════ */
+.section{position:relative;z-index:1;padding:7rem 6vw}
+.inner{max-width:1100px;margin:0 auto}
+.tag{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.66rem;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;font-weight:700;margin-bottom:0.9rem}
+.tag::before{content:'';width:18px;height:1px;background:var(--gold)}
+.sh2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,4.2vw,3.1rem);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:1rem}
+.sh2 em{font-style:italic;color:transparent;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;background-clip:text}
+.ssub{font-size:0.96rem;color:var(--muted);line-height:1.82;max-width:510px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.rvl{opacity:0;transform:translateX(-28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.rvr{opacity:0;transform:translateX(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.rv.on,.rvl.on,.rvr.on{opacity:1;transform:none}
+
+/* ════ ABOUT ════ */
+#about{background:linear-gradient(180deg,var(--bg),rgba(11,21,32,0.5))}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:3.5rem}
+.about-list{list-style:none;margin-top:1.4rem;display:flex;flex-direction:column;gap:0.85rem}
+.about-list li{display:flex;align-items:flex-start;gap:0.9rem;font-size:0.88rem;color:var(--muted);line-height:1.65}
+.li-dot{flex-shrink:0;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--gold);background:rgba(180,148,72,0.1);margin-top:3px}
+
+.about-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:2.5rem;box-shadow:var(--glow);position:relative;overflow:hidden;
+}
+.about-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold3),var(--gold),transparent)}
+.about-icon-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-top:1.5rem}
+.aig{background:rgba(180,148,72,0.04);border:1px solid rgba(180,148,72,0.11);border-radius:12px;padding:1.3rem;transition:border-color 0.25s,transform 0.25s}
+.aig:hover{border-color:rgba(180,148,72,0.35);transform:translateY(-3px)}
+.aig-em{font-size:1.5rem;margin-bottom:0.55rem;display:block}
+.aig h4{font-size:0.83rem;color:var(--white);font-weight:600;margin-bottom:0.25rem}
+.aig p{font-size:0.74rem;color:var(--muted);line-height:1.5}
+
+.float-pill{
+  position:absolute;bottom:-1.2rem;right:-1.2rem;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#060c14;border-radius:14px;padding:0.9rem 1.3rem;
+  font-weight:700;font-size:0.72rem;text-align:center;
+  box-shadow:0 8px 28px rgba(180,148,72,0.32);line-height:1.4;
+}
+.float-pill strong{display:block;font-size:1.35rem;font-family:'Cormorant Garamond',serif;font-weight:700}
+
+/* ════ PLATFORMS ════ */
+#platforms{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3.5rem}
+.pc{
+  background:var(--card2);border:1px solid var(--border);border-radius:var(--r);
+  padding:2.2rem 1.9rem;position:relative;overflow:hidden;
+  transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;cursor:default;
+}
+.pc::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(180,148,72,0.09),transparent 65%);opacity:0;transition:opacity 0.3s}
+.pc:hover{transform:translateY(-6px);border-color:rgba(180,148,72,0.38);box-shadow:0 16px 48px rgba(0,0,0,0.38),var(--glow)}
+.pc:hover::after{opacity:1}
+.pc.feat{border-color:rgba(180,148,72,0.4);background:linear-gradient(135deg,rgba(180,148,72,0.06),var(--card2))}
+.ps{position:absolute;top:1.1rem;right:1.1rem;font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.22rem 0.6rem;border-radius:50px}
+.live{background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.22)}
+.soon{background:rgba(180,148,72,0.09);color:var(--gold2);border:1px solid rgba(180,148,72,0.18)}
+.pc-icon{margin-bottom:1.4rem;display:block;width:46px;height:46px}
+.pc h3{font-size:1.05rem;color:var(--white);font-weight:600;margin-bottom:0.45rem}
+.pc p{font-size:0.8rem;color:var(--muted);line-height:1.62}
+.pc-link{display:inline-flex;align-items:center;gap:0.35rem;margin-top:1.1rem;font-size:0.72rem;color:var(--gold);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:gap 0.2s}
+.pc:hover .pc-link{gap:0.65rem}
+
+.pc-usa{grid-column:span 3;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.pc-usa-flags{display:flex;align-items:center;gap:0.8rem;flex-shrink:0}
+.fl{text-align:center}
+.fl-em{font-size:2.8rem;line-height:1;display:block}
+.fl-lbl{font-size:0.62rem;color:var(--muted2);letter-spacing:0.1em;text-transform:uppercase}
+.fl-plus{color:var(--muted2);font-size:1.1rem}
+.pc-usa-text h3{font-size:1.25rem;color:var(--white);font-weight:600;margin-bottom:0.5rem}
+.pc-usa-text p{font-size:0.85rem;color:var(--muted);max-width:500px;line-height:1.72}
+
+/* ════ SOCIAL PROOF MARQUEE ════ */
+.proof{position:relative;z-index:1;padding:3.5rem 0;overflow:hidden;border-top:1px solid var(--border)}
+.proof-track{display:flex;animation:tick 44s linear infinite;width:max-content}
+.pi{display:flex;align-items:center;gap:1rem;padding:0 2.8rem;flex-shrink:0}
+.pi-stars{color:var(--gold2);font-size:0.85rem;letter-spacing:2px}
+.pi-text{font-size:0.88rem;color:var(--muted);font-style:italic;white-space:nowrap}
+.pi-auth{font-size:0.72rem;color:var(--muted2);white-space:nowrap}
+.pi-sep{width:1px;height:36px;background:var(--border);flex-shrink:0}
+
+/* ════ RETURNS ════ */
+.returns-layout{display:grid;grid-template-columns:1fr 1.45fr;gap:5rem;align-items:start;margin-top:3.5rem}
+.rh{display:flex;align-items:flex-start;gap:1.1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1.3rem;transition:border-color 0.25s,transform 0.25s}
+.rh:hover{border-color:rgba(180,148,72,0.35);transform:translateX(4px)}
+.rh-ic{width:42px;height:42px;border-radius:11px;flex-shrink:0;background:rgba(180,148,72,0.08);border:1px solid rgba(180,148,72,0.18);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.rh h4{font-size:0.9rem;color:var(--white);font-weight:600;margin-bottom:0.3rem}
+.rh p{font-size:0.8rem;color:var(--muted);line-height:1.62}
+
+.rpbox{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.4rem;position:relative;overflow:hidden}
+.rpbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold3),var(--gold))}
+.rpbox-title{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--white);margin-bottom:1.3rem}
+.pr{display:flex;justify-content:space-between;align-items:center;padding:0.85rem 0;border-bottom:1px solid rgba(180,148,72,0.07)}
+.pr:last-of-type{border:none}
+.pr-l{font-size:0.8rem;color:var(--muted)}
+.pr-v{font-size:0.8rem;color:var(--gold2);font-weight:600;text-align:right;max-width:54%}
+.rpnote{margin-top:1.4rem;background:rgba(180,148,72,0.04);border:1px solid rgba(180,148,72,0.11);border-radius:10px;padding:1rem;font-size:0.76rem;color:var(--muted);line-height:1.72}
+
+/* ════ WHY ════ */
+#why{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:3.5rem}
+.wc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s}
+.wc::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform 0.35s}
+.wc:hover{border-color:rgba(180,148,72,0.32);transform:translateY(-5px);box-shadow:0 16px 44px rgba(0,0,0,0.32)}
+.wc:hover::before{transform:scaleX(1)}
+.wc-icon{width:54px;height:54px;margin:0 auto 1.1rem;border-radius:14px;background:rgba(180,148,72,0.07);border:1px solid rgba(180,148,72,0.15);display:flex;align-items:center;justify-content:center;font-size:1.35rem}
+.wc h4{font-size:0.92rem;color:var(--white);font-weight:600;margin-bottom:0.45rem}
+.wc p{font-size:0.78rem;color:var(--muted);line-height:1.62}
+
+/* ════ CONTACT ════ */
+.contact-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;margin-top:3.5rem;align-items:start}
+.ci{display:flex;gap:1.1rem;align-items:flex-start;margin-bottom:1.6rem}
+.ci-ic{width:42px;height:42px;border-radius:11px;flex-shrink:0;background:rgba(180,148,72,0.06);border:1px solid rgba(180,148,72,0.13);display:flex;align-items:center;justify-content:center;font-size:0.95rem}
+.ci h5{font-size:0.66rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-weight:700;margin-bottom:0.28rem}
+.ci p,.ci a{font-size:0.88rem;color:var(--muted);text-decoration:none;line-height:1.65}
+.ci a:hover{color:var(--gold2)}
+
+.cfbox{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.4rem;position:relative;overflow:hidden}
+.cfbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold3),var(--gold))}
+.cf-title{font-size:1.05rem;color:var(--white);font-weight:600;margin-bottom:1.5rem}
+.fg{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1rem}
+.fg label{font-size:0.68rem;color:var(--muted2);letter-spacing:0.09em;text-transform:uppercase;font-weight:600}
+.fg input,.fg textarea,.fg select{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(180,148,72,0.13);
+  border-radius:10px;padding:0.76rem 1rem;
+  color:var(--cream);font-family:'Outfit',sans-serif;font-size:0.88rem;
+  outline:none;transition:border-color 0.2s,box-shadow 0.2s;width:100%;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(180,148,72,0.09)}
+.fg select option{background:var(--card)}
+.fg textarea{resize:vertical;min-height:108px}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.sbtn{
+  width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#060c14;
+  border:none;border-radius:50px;padding:0.92rem;
+  font-weight:700;font-size:0.88rem;letter-spacing:0.04em;
+  cursor:pointer;font-family:'Outfit',sans-serif;
+  transition:opacity 0.2s,transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 6px 22px rgba(180,148,72,0.22);margin-top:0.4rem;
+}
+.sbtn:hover{opacity:0.88;transform:translateY(-2px);box-shadow:0 10px 30px rgba(180,148,72,0.38)}
+.f-note{font-size:0.7rem;color:var(--muted2);text-align:center;margin-top:0.75rem}
+.fmsg{font-size:0.8rem;margin-top:0.55rem;padding:0.6rem 1rem;border-radius:8px;display:none}
+.fmsg.ok{display:block;background:rgba(34,197,94,0.09);color:#4ade80;border:1px solid rgba(74,222,128,0.18)}
+.fmsg.err{display:block;background:rgba(239,68,68,0.09);color:#f87171;border:1px solid rgba(239,68,68,0.18)}
+
+/* ════ MODALS ════ */
+.mo{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.82);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:2rem}
+.mo.open{display:flex}
+.mbox{background:var(--card);border:1px solid var(--border);border-radius:20px;max-width:700px;width:100%;max-height:82vh;overflow-y:auto;padding:2.8rem;animation:mPop 0.28s cubic-bezier(0.34,1.56,0.64,1);position:relative}
+.mbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold3),var(--gold));border-radius:20px 20px 0 0}
+@keyframes mPop{from{opacity:0;transform:scale(0.93) translateY(14px)}to{opacity:1;transform:none}}
+.mbox h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;color:var(--white);margin-bottom:0.4rem}
+.mdate{font-size:0.73rem;color:var(--muted2);margin-bottom:1.7rem}
+.mclose{position:absolute;top:1.3rem;right:1.3rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:0.32rem 0.72rem;cursor:pointer;font-size:0.78rem;transition:all 0.2s;font-family:'Outfit',sans-serif}
+.mclose:hover{border-color:var(--gold);color:var(--gold)}
+.mbox h3{font-size:0.76rem;color:var(--gold2);letter-spacing:0.1em;text-transform:uppercase;font-weight:700;margin:1.4rem 0 0.45rem}
+.mbox p,.mbox li{font-size:0.86rem;color:var(--muted);line-height:1.82}
+.mbox ul{padding-left:1.1rem;margin-top:0.35rem}
+.mbox a{color:var(--gold2)}
+
+/* ════ FOOTER ════ */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);background:rgba(4,8,14,0.97);padding:5rem 6vw 2.5rem}
+.ft{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1100px;margin:0 auto 3.5rem}
+
+/* Footer logo area */
+.footer-logo-wrap{margin-bottom:1.2rem}
+.fb p{font-size:0.82rem;color:var(--muted);line-height:1.78;max-width:290px}
+.fb-flags{display:flex;gap:0.55rem;margin-top:1.1rem;flex-wrap:wrap}
+.fb-fl{display:flex;align-items:center;gap:0.38rem;border:1px solid var(--border);border-radius:6px;padding:0.28rem 0.7rem;font-size:0.7rem;color:var(--muted)}
+.fcol h5{font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:1.1rem}
+.fcol a{display:block;font-size:0.82rem;color:var(--muted);text-decoration:none;margin-bottom:0.55rem;transition:color 0.2s,padding-left 0.2s;cursor:pointer}
+.fcol a:hover{color:var(--gold2);padding-left:4px}
+.fcol address{font-style:normal;font-size:0.82rem;color:var(--muted);line-height:1.78}
+.fbot{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:1px solid var(--border);padding-top:1.6rem}
+.fbot p{font-size:0.73rem;color:var(--muted2)}
+.fleg{display:flex;gap:1.6rem;flex-wrap:wrap}
+.fleg a{font-size:0.73rem;color:var(--muted2);text-decoration:none;cursor:pointer;transition:color 0.2s}
+.fleg a:hover{color:var(--gold)}
+
+/* ════ COOKIE ════ */
+#cb{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);z-index:300;width:min(660px,calc(100vw - 2.8rem));background:rgba(11,21,32,0.97);border:1px solid var(--border);border-radius:16px;padding:1.3rem 1.7rem;display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;backdrop-filter:blur(18px);box-shadow:0 16px 48px rgba(0,0,0,0.55);opacity:0;animation:cbIn 0.5s 2s ease forwards}
+@keyframes cbIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
+#cb p{font-size:0.78rem;color:var(--muted);line-height:1.6;flex:1;min-width:180px}
+#cb a{color:var(--gold2);text-decoration:none}
+.cbbtns{display:flex;gap:0.6rem;flex-shrink:0}
+.cb-yes{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#060c14;border:none;border-radius:8px;padding:0.48rem 1.15rem;font-weight:700;font-size:0.76rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:opacity 0.2s}
+.cb-yes:hover{opacity:0.84}
+.cb-no{background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:8px;padding:0.48rem 1.15rem;font-size:0.76rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:border-color 0.2s,color 0.2s}
+.cb-no:hover{border-color:var(--muted);color:var(--cream)}
+
+/* ════ SOCIAL ICONS ════ */
+.social-bar{display:flex;align-items:center;gap:0.55rem}
+.soc-btn{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.03);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;transition:border-color 0.2s,background 0.2s,transform 0.2s;
+  flex-shrink:0;
+}
+.soc-btn svg{width:16px;height:16px;fill:var(--muted);transition:fill 0.2s}
+.soc-btn:hover{transform:translateY(-3px);background:rgba(180,148,72,0.1);border-color:rgba(180,148,72,0.45)}
+.soc-btn:hover svg{fill:var(--gold2)}
+/* individual brand hover colours */
+.soc-btn.fb:hover{background:rgba(24,119,242,0.12);border-color:rgba(24,119,242,0.4)}
+.soc-btn.fb:hover svg{fill:#4a90e2}
+.soc-btn.yt:hover{background:rgba(255,0,0,0.1);border-color:rgba(255,0,0,0.35)}
+.soc-btn.yt:hover svg{fill:#ff4444}
+.soc-btn.tw:hover{background:rgba(0,0,0,0.18);border-color:rgba(255,255,255,0.25)}
+.soc-btn.tw:hover svg{fill:#e0e0e0}
+.soc-btn.ig:hover{background:rgba(225,48,108,0.1);border-color:rgba(225,48,108,0.35)}
+.soc-btn.ig:hover svg{fill:#e1306c}
+.soc-btn.tt:hover{background:rgba(105,201,208,0.1);border-color:rgba(105,201,208,0.35)}
+.soc-btn.tt:hover svg{fill:#69c9d0}
+
+/* larger social buttons for contact section */
+.social-bar.lg .soc-btn{width:44px;height:44px;border-radius:12px}
+.social-bar.lg .soc-btn svg{width:20px;height:20px}
+
+/* footer social */
+.footer-social{margin-top:1.4rem}
+.footer-social p{font-size:0.68rem;color:var(--muted2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;font-weight:600}
+.footer-social .social-bar{gap:0.5rem}
+
+/* nav social — hide on small screens */
+.nav-social{display:flex;align-items:center;gap:0.4rem}
+@media(max-width:900px){.nav-social{display:none}}
+
+/* ════ RESPONSIVE ════ */
+@media(max-width:1040px){.why-grid{grid-template-columns:1fr 1fr}.plat-grid{grid-template-columns:1fr 1fr}.pc-usa{grid-column:span 2}}
+@media(max-width:860px){.about-grid,.returns-layout,.contact-layout{grid-template-columns:1fr;gap:2.8rem}.ft{grid-template-columns:1fr 1fr;gap:2rem}.trust-inner{grid-template-columns:1fr 1fr}.float-pill{position:static;margin-top:1.4rem;display:inline-block}}
+@media(max-width:640px){.nav-links{display:none}.hamburger{display:flex}.plat-grid{grid-template-columns:1fr}.pc-usa{grid-column:span 1}.why-grid{grid-template-columns:1fr}.ft{grid-template-columns:1fr}.fg-row{grid-template-columns:1fr}.trust-inner{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<!-- ════ NAV ════ -->
+<nav id="mainNav">
+  <!-- LOGO IN NAV -->
+  <a href="#home" class="nav-logo-wrap">
+    <svg class="kokal-logo-svg" width="168" height="46" viewBox="0 0 168 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ng1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d4a843"/><stop offset="50%" stop-color="#f0d070"/><stop offset="100%" stop-color="#b4862a"/></linearGradient>
+        <linearGradient id="ng2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0d070"/><stop offset="100%" stop-color="#b4862a"/></linearGradient>
+      </defs>
+      <!-- Hexagon mark -->
+      <polygon points="23,2 41,13 41,35 23,46 5,35 5,13" fill="none" stroke="url(#ng1)" stroke-width="1.2"/>
+      <polygon points="23,8 36,16 36,32 23,40 10,32 10,16" fill="rgba(212,168,67,0.06)"/>
+      <!-- K -->
+      <rect x="16" y="14" width="3.5" height="18" fill="url(#ng2)"/>
+      <polygon points="19.5,23 28,14 33,14 24,23" fill="url(#ng2)"/>
+      <polygon points="19.5,23 28,32 33,32 24,23" fill="url(#ng2)"/>
+      <!-- accent dot -->
+      <circle cx="39" cy="12" r="2" fill="#f0d070"/>
+      <!-- wordmark -->
+      <text x="50" y="21" font-family="'Cormorant Garamond',Georgia,serif" font-size="19" font-weight="700" letter-spacing="1.5" fill="#f0ead8">KOKAL</text>
+      <line x1="51" y1="25.5" x2="135" y2="25.5" stroke="rgba(180,148,72,0.3)" stroke-width="0.65"/>
+      <text x="51.5" y="37" font-family="'Outfit',sans-serif" font-size="7" font-weight="400" letter-spacing="4.5" fill="#7a8fa8">LIMITED</text>
+    </svg>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#returns">Returns</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:0.9rem">
+    <!-- NAV SOCIAL ICONS -->
+    <div class="nav-social">
+      <a href="https://www.facebook.com/kokallimited" target="_blank" rel="noopener" class="soc-btn fb" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn yt" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+      <a href="https://www.twitter.com/kokallimited" target="_blank" rel="noopener" class="soc-btn tw" aria-label="X / Twitter">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/kokallimited" target="_blank" rel="noopener" class="soc-btn ig" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn tt" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      </a>
+    </div>
+    <a href="mailto:contact@kokal.co.uk" class="nav-cta">Get In Touch</a>
+    <div class="hamburger" onclick="toggleMenu(this)"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- ════ TICKER ════ -->
+<div class="ticker-bar" aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="t-item">🇬🇧 Trusted UK Seller <span class="t-sep">✦</span></span>
+    <span class="t-item">📦 Fast Despatch <span class="t-sep">✦</span></span>
+    <span class="t-item">🛍️ eBay UK &amp; eBay USA <span class="t-sep">✦</span></span>
+    <span class="t-item">🔄 30-Day Returns <span class="t-sep">✦</span></span>
+    <span class="t-item">⭐ Quality Assured <span class="t-sep">✦</span></span>
+    <span class="t-item">💬 24hr Support <span class="t-sep">✦</span></span>
+    <span class="t-item">🌐 Amazon · Etsy · Vinted · Shopify Coming Soon <span class="t-sep">✦</span></span>
+    <span class="t-item">🇬🇧 Trusted UK Seller <span class="t-sep">✦</span></span>
+    <span class="t-item">📦 Fast Despatch <span class="t-sep">✦</span></span>
+    <span class="t-item">🛍️ eBay UK &amp; eBay USA <span class="t-sep">✦</span></span>
+    <span class="t-item">🔄 30-Day Returns <span class="t-sep">✦</span></span>
+    <span class="t-item">⭐ Quality Assured <span class="t-sep">✦</span></span>
+    <span class="t-item">💬 24hr Support <span class="t-sep">✦</span></span>
+    <span class="t-item">🌐 Amazon · Etsy · Vinted · Shopify Coming Soon <span class="t-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ════ HERO ════ -->
+<header id="home">
+  <div class="h-glow"></div>
+  <div class="h-ring"></div>
+  <div class="h-ring2"></div>
+  <div class="hero-inner">
+
+    <!-- LARGE HERO LOGO MARK -->
+    <div class="hero-logo-lockup">
+      <svg class="hero-logo-mark" width="108" height="108" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d4a843"/><stop offset="50%" stop-color="#f0d070"/><stop offset="100%" stop-color="#b4862a"/></linearGradient>
+          <linearGradient id="hg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0d070"/><stop offset="100%" stop-color="#b4862a"/></linearGradient>
+          <linearGradient id="hg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgba(212,168,67,0.18)"/><stop offset="100%" stop-color="rgba(212,168,67,0.04)"/></linearGradient>
+        </defs>
+        <!-- outer hex -->
+        <polygon points="32,2 62,18.5 62,45.5 32,62 2,45.5 2,18.5" fill="url(#hg3)" stroke="url(#hg1)" stroke-width="1.4"/>
+        <!-- inner hex -->
+        <polygon points="32,10 54,23 54,41 32,54 10,41 10,23" fill="rgba(212,168,67,0.05)" stroke="rgba(212,168,67,0.18)" stroke-width="0.8"/>
+        <!-- K stem -->
+        <rect x="20" y="17" width="5" height="30" rx="1" fill="url(#hg2)"/>
+        <!-- K upper arm -->
+        <polygon points="25,32 40,17 47.5,17 32.5,32" fill="url(#hg2)"/>
+        <!-- K lower arm -->
+        <polygon points="25,32 40,47 47.5,47 32.5,32" fill="url(#hg2)"/>
+        <!-- accent dot -->
+        <circle cx="58" cy="16" r="3" fill="#f0d070"/>
+        <circle cx="58" cy="16" r="5" fill="none" stroke="rgba(240,208,112,0.3)" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <div class="hero-eyebrow">
+      <span class="ey-line"></span>
+      <span class="ey-text">UK Registered Ecommerce Company</span>
+      <span class="ey-line"></span>
+    </div>
+    <h1 class="hero-title">Quality Products.<br><span class="gtext">Delivered.</span></h1>
+    <p class="hero-sub">Kokal Limited is a trusted UK-based seller bringing quality goods to buyers across the United Kingdom and the United States — with more marketplaces launching soon.</p>
+    <div class="hero-btns">
+      <a href="#platforms" class="btn-g">Shop Our Stores</a>
+      <a href="#contact" class="btn-o">Get In Touch</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chips-label">Live &amp; coming soon</span>
+      <span class="chip live"><span class="chip-dot"></span>eBay UK</span>
+      <span class="chip live"><span class="chip-dot"></span>eBay USA</span>
+      <span class="chip"><span class="chip-dot-off"></span>Amazon</span>
+      <span class="chip"><span class="chip-dot-off"></span>Vinted</span>
+      <span class="chip"><span class="chip-dot-off"></span>Etsy</span>
+      <span class="chip"><span class="chip-dot-off"></span>Shopify</span>
+    </div>
+  </div>
+</header>
+
+<!-- ════ TRUST ════ -->
+<div class="trust rv">
+  <div class="trust-inner">
+    <div class="t-stat"><div class="t-num" data-target="2">0</div><div class="t-lbl">Active Platforms</div></div>
+    <div class="t-stat"><div class="t-num" data-target="30">0</div><div class="t-lbl">Day Return Window</div></div>
+    <div class="t-stat"><div class="t-num" data-suffix="hr">24</div><div class="t-lbl">Response Guarantee</div></div>
+    <div class="t-stat"><div class="t-num" data-suffix="%">100</div><div class="t-lbl">Verified eBay Seller</div></div>
+  </div>
+</div>
+
+<!-- ════ ABOUT ════ -->
+<section id="about" class="section">
+  <div class="inner">
+    <div class="about-grid">
+      <div class="rvl">
+        <p class="tag">Who We Are</p>
+        <h2 class="sh2">A Reliable UK Seller<br>You Can <em>Trust</em></h2>
+        <p class="ssub">Kokal Limited is a registered UK company built on a simple promise: quality products, honest listings and outstanding customer care. We operate across leading online marketplaces, making it easy for buyers in the UK and USA to shop with confidence.</p>
+        <p class="ssub" style="margin-top:1rem">Currently active on eBay UK and eBay USA, we are expanding to Amazon, Vinted, Etsy and Shopify — bringing the same trusted standards to every platform we join.</p>
+        <ul class="about-list">
+          <li><span class="li-dot"></span>Accurate, honest listings — no surprises on delivery</li>
+          <li><span class="li-dot"></span>Fast despatch with tracked shipping on selected items</li>
+          <li><span class="li-dot"></span>Serving UK and US buyers via eBay's global marketplace</li>
+          <li><span class="li-dot"></span>Fully compliant with UK consumer protection law</li>
+        </ul>
+      </div>
+      <div class="rvr">
+        <div class="about-card">
+          <p class="tag">Our Strengths</p>
+          <div class="about-icon-grid">
+            <div class="aig"><span class="aig-em">🇬🇧</span><h4>UK Registered</h4><p>Fully registered company operating with complete transparency.</p></div>
+            <div class="aig"><span class="aig-em">🇺🇸</span><h4>US Market</h4><p>Active on eBay USA, reaching buyers across North America.</p></div>
+            <div class="aig"><span class="aig-em">📦</span><h4>Fast Despatch</h4><p>Orders processed quickly with reliable postage options.</p></div>
+            <div class="aig"><span class="aig-em">🌐</span><h4>Multi-Platform</h4><p>Growing presence across 5+ marketplaces by 2026.</p></div>
+          </div>
+          <div class="float-pill"><strong>2026</strong>Expansion<br>Roadmap</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SOCIAL PROOF ════ -->
+<div class="proof" aria-label="Customer reviews">
+  <div class="proof-track">
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Item exactly as described, posted very quickly"</span><span class="pi-auth">— eBay UK buyer</span></div><div class="pi-sep"></div>
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Great seller, fast shipping, would buy again"</span><span class="pi-auth">— eBay UK</span></div><div class="pi-sep"></div>
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Excellent communication and smooth transaction"</span><span class="pi-auth">— eBay buyer</span></div><div class="pi-sep"></div>
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Highly recommend — product quality was spot on"</span><span class="pi-auth">— eBay USA</span></div><div class="pi-sep"></div>
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Item exactly as described, posted very quickly"</span><span class="pi-auth">— eBay UK buyer</span></div><div class="pi-sep"></div>
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Great seller, fast shipping, would buy again"</span><span class="pi-auth">— eBay UK</span></div><div class="pi-sep"></div>
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Excellent communication and smooth transaction"</span><span class="pi-auth">— eBay buyer</span></div><div class="pi-sep"></div>
+    <div class="pi"><span class="pi-stars">★★★★★</span><span class="pi-text">"Highly recommend — product quality was spot on"</span><span class="pi-auth">— eBay USA</span></div><div class="pi-sep"></div>
+  </div>
+</div>
+
+<!-- ════ PLATFORMS ════ -->
+<section id="platforms" class="section">
+  <div class="inner">
+    <div class="rv"><p class="tag">Where To Find Us</p><h2 class="sh2">Our <em>Marketplaces</em></h2><p class="ssub">Active on eBay UK and eBay USA today, with a clear roadmap to expand across the world's leading selling platforms.</p></div>
+    <div class="plat-grid">
+
+      <div class="pc feat rv" style="transition-delay:0.05s">
+        <span class="ps live">● Live</span>
+        <svg class="pc-icon" viewBox="0 0 46 46" fill="none"><rect width="46" height="46" rx="12" fill="rgba(180,148,72,0.1)"/><text x="23" y="32" text-anchor="middle" font-size="26" font-family="Georgia,serif" font-weight="bold" fill="#d4b06a">e</text></svg>
+        <h3>eBay UK</h3>
+        <p>Our primary UK marketplace. Browse our full range with complete eBay buyer protection on every transaction.</p>
+        <a href="https://www.ebay.co.uk" target="_blank" rel="noopener" class="pc-link">Browse Store →</a>
+      </div>
+
+      <div class="pc feat rv" style="transition-delay:0.1s">
+        <span class="ps live">● Live</span>
+        <svg class="pc-icon" viewBox="0 0 46 46" fill="none"><rect width="46" height="46" rx="12" fill="rgba(180,148,72,0.1)"/><text x="23" y="24" text-anchor="middle" font-size="18" font-family="Georgia,serif" font-weight="bold" fill="#d4b06a">e</text><text x="23" y="37" text-anchor="middle" font-size="9" font-family="sans-serif" font-weight="700" fill="#d4b06a">USA</text></svg>
+        <h3>eBay USA 🇺🇸</h3>
+        <p>We also sell on eBay's US marketplace, reaching buyers across North America with international shipping options.</p>
+        <a href="https://www.ebay.com" target="_blank" rel="noopener" class="pc-link">Browse Store →</a>
+      </div>
+
+      <div class="pc rv" style="transition-delay:0.15s">
+        <span class="ps soon">Coming Soon</span>
+        <svg class="pc-icon" viewBox="0 0 46 46" fill="none"><rect width="46" height="46" rx="12" fill="rgba(180,148,72,0.05)"/><text x="23" y="31" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="#4e6070">A</text></svg>
+        <h3>Amazon</h3>
+        <p>Expanding to Amazon UK and USA to reach millions more buyers with Prime-eligible delivery.</p>
+      </div>
+
+      <div class="pc rv" style="transition-delay:0.2s">
+        <span class="ps soon">Coming Soon</span>
+        <svg class="pc-icon" viewBox="0 0 46 46" fill="none"><rect width="46" height="46" rx="12" fill="rgba(180,148,72,0.05)"/><text x="23" y="31" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="#4e6070">V</text></svg>
+        <h3>Vinted</h3>
+        <p>Fashion and lifestyle items launching soon on Vinted for buyers seeking great-value deals.</p>
+      </div>
+
+      <div class="pc rv" style="transition-delay:0.25s">
+        <span class="ps soon">Coming Soon</span>
+        <svg class="pc-icon" viewBox="0 0 46 46" fill="none"><rect width="46" height="46" rx="12" fill="rgba(180,148,72,0.05)"/><text x="23" y="31" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="#4e6070">E</text></svg>
+        <h3>Etsy</h3>
+        <p>Unique and curated items coming to Etsy — ideal for buyers who love something a little different.</p>
+      </div>
+
+      <div class="pc rv" style="transition-delay:0.3s">
+        <span class="ps soon">Coming Soon</span>
+        <svg class="pc-icon" viewBox="0 0 46 46" fill="none"><rect width="46" height="46" rx="12" fill="rgba(180,148,72,0.05)"/><text x="23" y="31" text-anchor="middle" font-size="20" font-family="Georgia,serif" font-weight="bold" fill="#4e6070">S</text></svg>
+        <h3>Kokal Store</h3>
+        <p>Our own Shopify storefront launching with exclusive products, bundles and member-only deals.</p>
+      </div>
+
+      <div class="pc pc-usa rv" style="transition-delay:0.35s">
+        <div class="pc-usa-flags">
+          <div class="fl"><span class="fl-em">🇬🇧</span><span class="fl-lbl">UK</span></div>
+          <span class="fl-plus">+</span>
+          <div class="fl"><span class="fl-em">🇺🇸</span><span class="fl-lbl">USA</span></div>
+        </div>
+        <div class="pc-usa-text">
+          <h3>Selling on eBay UK &amp; eBay USA</h3>
+          <p>Kokal Limited is active on both eBay UK and eBay's US marketplace, enabling us to serve buyers on both sides of the Atlantic. Whether you're shopping from London or Los Angeles, you can purchase from us with full eBay buyer protection and reliable international shipping.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ RETURNS ════ -->
+<section id="returns" class="section" style="background:var(--surface);border-top:1px solid var(--border)">
+  <div class="inner">
+    <div class="rv"><p class="tag">Our Guarantee</p><h2 class="sh2">Returns &amp; <em>Refunds</em></h2><p class="ssub">Shop with complete confidence. Our returns policy is clear, fair and always compliant with every platform we operate on.</p></div>
+    <div class="returns-layout">
+      <div>
+        <div class="rh rv" style="transition-delay:0.05s"><div class="rh-ic">📅</div><div><h4>30-Day Returns Window</h4><p>Minimum 30 days from receipt. Contact us and we'll make it right — every time.</p></div></div>
+        <div class="rh rv" style="transition-delay:0.1s"><div class="rh-ic">⚖️</div><div><h4>Platform Compliance</h4><p>Where a platform requires a more generous returns window, we honour it automatically.</p></div></div>
+        <div class="rh rv" style="transition-delay:0.15s"><div class="rh-ic">🔄</div><div><h4>Simple Process</h4><p>Message us via the platform or email <a href="/cdn-cgi/l/email-protection#64070b0a10050710240f0b0f05084a070b4a110f" style="color:var(--gold2)"><span class="__cf_email__" data-cfemail="bfdcd0d1cbdedccbffd4d0d4ded391dcd091cad4">[email&#160;protected]</span></a>. Response within 24 hours.</p></div></div>
+        <div class="rh rv" style="transition-delay:0.2s"><div class="rh-ic">💷</div><div><h4>Prompt Refunds</h4><p>Processed within 3–5 business days of receiving your return. Issued to your original payment method.</p></div></div>
+      </div>
+      <div class="rpbox rvr">
+        <div class="rpbox-title">Policy at a Glance</div>
+        <div class="pr"><span class="pr-l">Returns window</span><span class="pr-v">Minimum 30 days from receipt</span></div>
+        <div class="pr"><span class="pr-l">Platform compliance</span><span class="pr-v">Always match or exceed requirements</span></div>
+        <div class="pr"><span class="pr-l">Item condition</span><span class="pr-v">Original condition (unless faulty)</span></div>
+        <div class="pr"><span class="pr-l">Return postage (faulty item)</span><span class="pr-v">Covered by Kokal Limited</span></div>
+        <div class="pr"><span class="pr-l">Return postage (change of mind)</span><span class="pr-v">Buyer's responsibility</span></div>
+        <div class="pr"><span class="pr-l">Refund timeline</span><span class="pr-v">3–5 business days</span></div>
+        <div class="pr"><span class="pr-l">How to start</span><span class="pr-v">Platform message or <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="14777b7a60757760547f7b7f75783a777b3a617f">[email&#160;protected]</a></span></div>
+        <div class="rpnote">ℹ️ Your statutory rights under the <strong style="color:var(--cream)">Consumer Rights Act 2015</strong> and <strong style="color:var(--cream)">Consumer Contracts Regulations 2013</strong> are always fully protected.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ WHY ════ -->
+<section id="why" class="section">
+  <div class="inner">
+    <div class="rv" style="text-align:center;max-width:580px;margin:0 auto"><p class="tag" style="justify-content:center">Why Choose Us</p><h2 class="sh2" style="text-align:center">The Kokal <em>Difference</em></h2></div>
+    <div class="why-grid">
+      <div class="wc rv" style="transition-delay:0.05s"><div class="wc-icon">🇬🇧</div><h4>UK Registered</h4><p>A proper UK company — total peace of mind on every order.</p></div>
+      <div class="wc rv" style="transition-delay:0.1s"><div class="wc-icon">🌍</div><h4>UK &amp; US Reach</h4><p>Selling on eBay UK and eBay USA — serving buyers on both sides of the Atlantic.</p></div>
+      <div class="wc rv" style="transition-delay:0.15s"><div class="wc-icon">💬</div><h4>24-Hour Support</h4><p>Real people, fast responses. Helpful customer service every step of the way.</p></div>
+      <div class="wc rv" style="transition-delay:0.2s"><div class="wc-icon">✅</div><h4>Honest Listings</h4><p>Every item accurately described — no surprises when your order arrives.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ════ -->
+<section id="contact" class="section" style="border-top:1px solid var(--border)">
+  <div class="inner">
+    <div class="rv"><p class="tag">Get In Touch</p><h2 class="sh2">Contact <em>Kokal</em></h2><p class="ssub">Questions about an order, a return or anything else? We respond within 24 hours.</p></div>
+    <div class="contact-layout">
+      <div class="rvl">
+        <div class="ci"><div class="ci-ic">📧</div><div><h5>Email</h5><a href="/cdn-cgi/l/email-protection#8deee2e3f9eceef9cde6e2e6ece1a3eee2a3f8e6"><span class="__cf_email__" data-cfemail="6b0804051f0a081f2b0004000a07450804451e00">[email&#160;protected]</span></a></div></div>
+        <div class="ci"><div class="ci-ic">🕐</div><div><h5>Response Time</h5><p>All enquiries answered within 24 hours, Monday to Friday.</p></div></div>
+        <div class="ci"><div class="ci-ic">📦</div><div><h5>Order Queries</h5><p>Please include your order number and the platform you purchased from.</p></div></div>
+        <div class="ci"><div class="ci-ic">🏢</div><div><h5>Registered Address</h5><address>Kokal Limited<br>United Kingdom<br>Registered in England &amp; Wales</address></div></div>
+        <div class="ci"><div class="ci-ic">🌐</div><div><h5>Our Platforms</h5><p>eBay UK &amp; USA (live) · Amazon · Vinted · Etsy · Shopify (coming soon)</p></div></div>
+        <!-- SOCIAL ICONS IN CONTACT -->
+        <div class="ci">
+          <div class="ci-ic">📲</div>
+          <div>
+            <h5>Follow Us</h5>
+            <p style="margin-bottom:0.75rem">Stay up to date with new listings and offers</p>
+            <div class="social-bar lg">
+              <a href="https://www.facebook.com/kokallimited" target="_blank" rel="noopener" class="soc-btn fb" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://www.youtube.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn yt" aria-label="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+              <a href="https://www.twitter.com/kokallimited" target="_blank" rel="noopener" class="soc-btn tw" aria-label="X / Twitter">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/kokallimited" target="_blank" rel="noopener" class="soc-btn ig" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              </a>
+              <a href="https://www.tiktok.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn tt" aria-label="TikTok">
+                <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rvr">
+        <div class="cfbox">
+          <div class="cf-title">Send Us a Message</div>
+          <div class="fg-row">
+            <div class="fg"><label>First Name</label><input type="text" id="fn" placeholder="Jane"/></div>
+            <div class="fg"><label>Last Name</label><input type="text" id="ln" placeholder="Smith"/></div>
+          </div>
+          <div class="fg"><label>Email</label><input type="email" id="em" placeholder="your@email.com"/></div>
+          <div class="fg"><label>Subject</label>
+            <select id="sub">
+              <option value="">Select a topic…</option>
+              <option>Order Enquiry</option><option>Returns &amp; Refunds</option>
+              <option>Product Question</option><option>Shipping &amp; Tracking</option>
+              <option>Business / Partnership</option><option>Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Message</label><textarea id="msg" placeholder="Please describe your enquiry…"></textarea></div>
+          <button class="sbtn" onclick="send()">Send Message →</button>
+          <p class="f-note">We respond to all enquiries within 24 hours (Mon–Fri)</p>
+          <div class="fmsg" id="fm"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="ft">
+    <div class="fb">
+      <!-- FOOTER LOGO -->
+      <div class="footer-logo-wrap">
+        <svg class="kokal-logo-svg" width="160" height="44" viewBox="0 0 160 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="flg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d4a843"/><stop offset="50%" stop-color="#f0d070"/><stop offset="100%" stop-color="#b4862a"/></linearGradient>
+            <linearGradient id="flg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8c85a"/><stop offset="100%" stop-color="#a47820"/></linearGradient>
+          </defs>
+          <polygon points="22,2 39,12 39,32 22,42 5,32 5,12" fill="none" stroke="url(#flg1)" stroke-width="1.1"/>
+          <polygon points="22,8 34,15 34,29 22,36 10,29 10,15" fill="rgba(212,168,67,0.05)"/>
+          <rect x="15.5" y="13" width="3.2" height="18" fill="url(#flg2)"/>
+          <polygon points="18.7,22 27,13 31.5,13 23,22" fill="url(#flg2)"/>
+          <polygon points="18.7,22 27,31 31.5,31 23,22" fill="url(#flg2)"/>
+          <circle cx="37" cy="11" r="1.8" fill="#f0d070"/>
+          <text x="48" y="20" font-family="'Cormorant Garamond',Georgia,serif" font-size="18" font-weight="700" letter-spacing="1.5" fill="#f0ead8">KOKAL</text>
+          <line x1="49" y1="24.5" x2="128" y2="24.5" stroke="rgba(180,148,72,0.28)" stroke-width="0.6"/>
+          <text x="49.5" y="35" font-family="'Outfit',sans-serif" font-size="6.8" font-weight="400" letter-spacing="4" fill="#7a8fa8">LIMITED</text>
+        </svg>
+      </div>
+      <p>A trusted UK-based ecommerce company selling quality products on eBay UK, eBay USA and more. Expanding to new marketplaces throughout 2025–2026.</p>
+      <div class="fb-flags">
+        <span class="fb-fl">🇬🇧 eBay UK — Live</span>
+        <span class="fb-fl">🇺🇸 eBay USA — Live</span>
+        <span class="fb-fl">🔜 More platforms coming</span>
+      </div>
+      <!-- FOOTER SOCIAL -->
+      <div class="footer-social">
+        <p>Follow Us</p>
+        <div class="social-bar">
+          <a href="https://www.facebook.com/kokallimited" target="_blank" rel="noopener" class="soc-btn fb" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn yt" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="https://www.twitter.com/kokallimited" target="_blank" rel="noopener" class="soc-btn tw" aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/kokallimited" target="_blank" rel="noopener" class="soc-btn ig" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn tt" aria-label="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="fcol"><h5>Navigate</h5><a href="#home">Home</a><a href="#about">About Us</a><a href="#platforms">Our Platforms</a><a href="#returns">Returns</a><a href="#contact">Contact</a></div>
+    <div class="fcol"><h5>Legal</h5><a onclick="om('privacy')">Privacy Policy</a><a onclick="om('terms')">Terms &amp; Conditions</a><a onclick="om('returns-modal')">Returns Policy</a><a onclick="om('cookies')">Cookie Policy</a></div>
+    <div class="fcol"><h5>Contact</h5><address><a href="/cdn-cgi/l/email-protection#ddbeb2b3a9bcbea99db6b2b6bcb1f3beb2f3a8b6"><span class="__cf_email__" data-cfemail="0665696872676572466d696d676a28656928736d">[email&#160;protected]</span></a><br><br>Kokal Limited<br>United Kingdom<br>Registered in England &amp; Wales</address></div>
+  </div>
+  <div class="fbot">
+    <p>© <span id="yr"></span> Kokal Limited. All rights reserved. Registered in England &amp; Wales.</p>
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+      <div class="fleg"><a onclick="om('privacy')">Privacy</a><a onclick="om('terms')">Terms</a><a onclick="om('returns-modal')">Returns</a><a onclick="om('cookies')">Cookies</a></div>
+      <div class="social-bar">
+        <a href="https://www.facebook.com/kokallimited" target="_blank" rel="noopener" class="soc-btn fb" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="https://www.youtube.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn yt" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+        <a href="https://www.twitter.com/kokallimited" target="_blank" rel="noopener" class="soc-btn tw" aria-label="X / Twitter"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://www.instagram.com/kokallimited" target="_blank" rel="noopener" class="soc-btn ig" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="https://www.tiktok.com/@kokallimited" target="_blank" rel="noopener" class="soc-btn tt" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════ MODALS ════ -->
+<div class="mo" id="modal-privacy" onclick="co(event,'privacy')">
+  <div class="mbox"><button class="mclose" onclick="cm('privacy')">✕ Close</button><h2>Privacy Policy</h2><p class="mdate">Last updated: January 2025</p>
+  <p>Kokal Limited ("we","our","us") is committed to protecting your privacy.</p>
+  <h3>1. Who We Are</h3><p>Kokal Limited is registered in England and Wales. Contact: <a href="/cdn-cgi/l/email-protection#dbb8b4b5afbab8af9bb0b4b0bab7f5b8b4f5aeb0"><span class="__cf_email__" data-cfemail="d7b4b8b9a3b6b4a397bcb8bcb6bbf9b4b8f9a2bc">[email&#160;protected]</span></a></p>
+  <h3>2. Data We Collect</h3><ul><li>Name, email, delivery address from purchases or enquiries</li><li>Order details and transaction history</li><li>Communications via email or platform messaging</li><li>Website usage data via cookies</li></ul>
+  <h3>3. How We Use Your Data</h3><ul><li>To fulfil and manage orders</li><li>To respond to enquiries</li><li>To comply with legal obligations</li><li>To improve our services</li></ul>
+  <h3>4. Legal Basis</h3><p>UK GDPR and Data Protection Act 2018 — contract performance, legitimate interests, legal compliance.</p>
+  <h3>5. Sharing Your Data</h3><p>We do not sell personal data. We may share with marketplace platforms and payment processors solely to fulfil orders.</p>
+  <h3>6. Your Rights</h3><p>Access, rectify or erase your data by contacting <a href="/cdn-cgi/l/email-protection#dbb8b4b5afbab8af9bb0b4b0bab7f5b8b4f5aeb0"><span class="__cf_email__" data-cfemail="90f3fffee4f1f3e4d0fbfffbf1fcbef3ffbee5fb">[email&#160;protected]</span></a>.</p></div>
+</div>
+
+<div class="mo" id="modal-terms" onclick="co(event,'terms')">
+  <div class="mbox"><button class="mclose" onclick="cm('terms')">✕ Close</button><h2>Terms &amp; Conditions</h2><p class="mdate">Last updated: January 2025</p>
+  <p>By placing an order with Kokal Limited you agree to these Terms.</p>
+  <h3>1. About Us</h3><p>Kokal Limited — UK-registered ecommerce company. <a href="/cdn-cgi/l/email-protection#2744484953464453674c484c464b09444809524c"><span class="__cf_email__" data-cfemail="e5868a8b91848691a58e8a8e8489cb868acb908e">[email&#160;protected]</span></a></p>
+  <h3>2. Products</h3><p>We endeavour to keep listings accurate. In the event of error we may cancel and refund.</p>
+  <h3>3. Pricing</h3><p>GBP (£) and USD ($) depending on platform. VAT inclusive where applicable.</p>
+  <h3>4. Payment</h3><p>Processed securely via each platform's system. We do not store card details.</p>
+  <h3>5. Despatch</h3><ul><li>Typically 1–3 working days</li><li>Delivery times are indicative</li><li>International orders may incur customs duties payable by the buyer</li></ul>
+  <h3>6. Returns</h3><p>Minimum 30-day window per Consumer Contracts Regulations 2013.</p>
+  <h3>7. Governing Law</h3><p>Laws of England and Wales. Disputes subject to English courts.</p></div>
+</div>
+
+<div class="mo" id="modal-returns-modal" onclick="co(event,'returns-modal')">
+  <div class="mbox"><button class="mclose" onclick="cm('returns-modal')">✕ Close</button><h2>Returns &amp; Refunds Policy</h2><p class="mdate">Last updated: January 2025</p>
+  <h3>1. Returns Window</h3><p>Minimum 30 days from receipt. Where a platform mandates longer, we honour it.</p>
+  <h3>2. Eligibility</h3><ul><li>Original condition unless faulty or not as described</li><li>Personalised items may not be returnable unless faulty</li></ul>
+  <h3>3. How to Return</h3><p>Contact via platform or <a href="/cdn-cgi/l/email-protection#90f3fffee4f1f3e4d0fbfffbf1fcbef3ffbee5fb"><span class="__cf_email__" data-cfemail="b4d7dbdac0d5d7c0f4dfdbdfd5d89ad7db9ac1df">[email&#160;protected]</span></a> with your order number. We respond within 24 hours.</p>
+  <h3>4. Refunds</h3><p>Processed within 3–5 business days. Issued to original payment method.</p>
+  <h3>5. Postage</h3><p>Faulty/misdescribed: covered by us. Change of mind: buyer's responsibility.</p>
+  <h3>6. Statutory Rights</h3><p>Consumer Rights Act 2015 and Consumer Contracts Regulations 2013 always apply.</p></div>
+</div>
+
+<div class="mo" id="modal-cookies" onclick="co(event,'cookies')">
+  <div class="mbox"><button class="mclose" onclick="cm('cookies')">✕ Close</button><h2>Cookie Policy</h2><p class="mdate">Last updated: January 2025</p>
+  <p>This website uses cookies to improve your experience.</p>
+  <h3>1. What Are Cookies?</h3><p>Small text files placed on your device when you visit a website.</p>
+  <h3>2. Types We Use</h3><ul><li><strong style="color:var(--cream)">Essential:</strong> Required for core site functionality</li><li><strong style="color:var(--cream)">Analytics:</strong> Help us understand visitor interactions</li></ul>
+  <h3>3. Managing Cookies</h3><p>Control via your browser settings. Disabling some cookies may affect functionality.</p>
+  <h3>4. Contact</h3><p><a href="/cdn-cgi/l/email-protection#93f0fcfde7f2f0e7d3f8fcf8f2ffbdf0fcbde6f8"><span class="__cf_email__" data-cfemail="91f2feffe5f0f2e5d1fafefaf0fdbff2febfe4fa">[email&#160;protected]</span></a></p></div>
+</div>
+
+<!-- ════ COOKIE BANNER ════ -->
+<div id="cb">
+  <p>We use cookies to improve your experience. See our <a onclick="om('cookies')" href="#">Cookie Policy</a>.</p>
+  <div class="cbbtns">
+    <button class="cb-yes" onclick="dcb()">Accept All</button>
+    <button class="cb-no" onclick="dcb()">Decline</button>
+  </div>
+</div>
+
+<!-- ════ SCRIPTS ════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* YEAR */
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* CANVAS PARTICLES */
+(function(){
+  const c=document.getElementById('bgCanvas'),x=c.getContext('2d');
+  let W,H,P=[];
+  function rs(){W=c.width=innerWidth;H=c.height=innerHeight}
+  addEventListener('resize',rs);rs();
+  class Pt{
+    constructor(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.1+0.3;this.vx=(Math.random()-.5)*.16;this.vy=(Math.random()-.5)*.16;this.o=Math.random()*.38+.05}
+    u(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1}
+    d(){x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle=`rgba(180,148,72,${this.o})`;x.fill()}
+  }
+  for(let i=0;i<85;i++)P.push(new Pt());
+  function ln(){
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+      const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<135){x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.strokeStyle=`rgba(180,148,72,${.055*(1-d/135)})`;x.lineWidth=.45;x.stroke()}
+    }
+  }
+  function loop(){x.clearRect(0,0,W,H);P.forEach(p=>{p.u();p.d()});ln();requestAnimationFrame(loop)}
+  loop();
+})();
+
+/* STICKY NAV */
+addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('scrolled',scrollY>40));
+
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}}),{threshold:0.1});
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
+
+/* COUNTERS */
+function cnt(el){
+  const tgt=parseInt(el.dataset.target||el.textContent),sfx=el.dataset.suffix||'';
+  if(!el.dataset.target)return;
+  let cur=0,fr=1800/16,inc=tgt/fr;
+  const t=setInterval(()=>{cur=Math.min(cur+inc,tgt);el.textContent=Math.round(cur)+sfx;if(cur>=tgt)clearInterval(t)},16);
+}
+new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-target]').forEach(cnt);}}),{threshold:0.3}).observe(document.querySelector('.trust'));
+
+/* MODALS */
+function om(id){document.getElementById('modal-'+id).classList.add('open');document.body.style.overflow='hidden'}
+function cm(id){document.getElementById('modal-'+id).classList.remove('open');document.body.style.overflow=''}
+function co(e,id){if(e.target===e.currentTarget)cm(id)}
+addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.mo.open').forEach(m=>{m.classList.remove('open');document.body.style.overflow=''})});
+
+/* HAMBURGER */
+function toggleMenu(el){
+  const l=document.querySelector('.nav-links'),open=l.style.display==='flex';
+  l.style.display=open?'none':'flex';
+  if(!open)  if(!open)Object.assign(l.style,{flexDirection:'column',position:'absolute',top:'74px',left:'0',right:'0',background:'rgba(6,12,20,0.98)',padding:'1.4rem 2rem',borderBottom:'1px solid rgba(180,148,72,0.18)',zIndex:'99'});
+  else l.style.flexDirection='';
+}
+
+/* FORM */
+function send(){
+  const n=(document.getElementById('fn').value+' '+document.getElementById('ln').value).trim();
+  const e=document.getElementById('em').value.trim();
+  const s=document.getElementById('sub').value;
+  const m=document.getElementById('msg').value.trim();
+  const fm=document.getElementById('fm');
+  fm.className='fmsg';
+  if(!n||!e||!s||!m){fm.textContent='⚠ Please complete all fields.';fm.className='fmsg err';return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){fm.textContent='⚠ Please enter a valid email.';fm.className='fmsg err';return}
+  const b=encodeURIComponent('Name: '+n+'\nEmail: '+e+'\nSubject: '+s+'\n\nMessage:\n'+m);
+  location.href='mailto:contact@kokal.co.uk?subject='+encodeURIComponent('[Kokal] '+s)+'&body='+b;
+  fm.textContent='✓ Your email client is opening — please send from there. Thank you!';
+  fm.className='fmsg ok';
+}
+
+/* COOKIE BANNER */
+function dcb(){
+  var banner=document.getElementById('cb');
+  if(banner) banner.style.display='none';
+  try{sessionStorage.setItem('ck','1')}catch(e){}
+}
+try{if(sessionStorage.getItem('ck')){var b=document.getElementById('cb');if(b)b.style.display='none';}}catch(e){}
+document.querySelector('.cb-yes').addEventListener('click',function(){dcb()});
+document.querySelector('.cb-no').addEventListener('click',function(){dcb()});
+</script>
+</body>
+</html>
